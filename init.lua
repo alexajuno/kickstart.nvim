@@ -100,9 +100,14 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+-- Relative line numbers in normal mode, absolute in insert mode
+vim.o.relativenumber = true
+vim.api.nvim_create_autocmd({ 'InsertEnter' }, {
+  callback = function() vim.o.relativenumber = false end,
+})
+vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
+  callback = function() vim.o.relativenumber = true end,
+})
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -115,6 +120,15 @@ vim.o.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+
+-- Auto-reload files changed outside of Neovim
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+  command = 'checktime',
+})
+
+-- Enable line wrapping
+vim.o.wrap = true
 
 -- Enable break indent
 vim.o.breakindent = true
