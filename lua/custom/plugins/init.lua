@@ -5,4 +5,13 @@
 
 ---@module 'lazy'
 ---@type LazySpec
-return {}
+return {
+  {
+    'sindrets/diffview.nvim',
+    opts = {
+      view = {
+        default = { layout = 'diff2_vertical' },
+      },
+    },
+  },
+}
