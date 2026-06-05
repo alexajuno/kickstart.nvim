@@ -637,14 +637,41 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        pyright = {},
+        rust_analyzer = {
+          settings = {
+            ['rust-analyzer'] = {
+              cargo = { allFeatures = true },
+              checkOnSave = { command = 'clippy' },
+            },
+          },
+        },
+
+        -- PHP (Intelephense) - works well with Laravel
+        intelephense = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                location = vim.fn.expand '$MASON/packages/vue-language-server',
+                languages = { 'vue' },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
+
+        -- Vue language server (hybrid mode — handles Vue SFC, CSS/HTML sections)
+        vue_ls = {},
+
+        -- CSS/SCSS/LESS language server
+        cssls = {},
 
         stylua = {}, -- Used to format Lua code
 
